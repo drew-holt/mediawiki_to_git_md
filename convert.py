@@ -8,16 +8,16 @@ import gzip
 import re
 from xml.etree import cElementTree as ElementTree
 
-prefix = "wiki/"
+prefix = ""
 mediawiki_ext = "mediawiki"
 markdown_ext = "md"
 user_table = "usernames.txt"
 user_blacklist = "user_blocklist.txt"
 default_email = "anonymous.contributor@example.org"
-base_url = "http://www.open-bio.org/" # Used for images etc; prefix is appended to this!
-base_image_url = base_url + "w/images/" # Used for images
+base_url = "http://wiki.invadelabs.com/" # Used for images etc; prefix is appended to this!
+base_image_url = base_url + "images/" # Used for images
 page_prefixes_to_ignore = ["Help:", "MediaWiki:", "Talk:", "User:", "User talk:"] # Beware spaces vs _
-default_layout = "wiki" # Can also use None; note get tagpage for category listings
+default_layout = "default" # Can also use None; note get tagpage for category listings
 git = "git" # assume on path
 pandoc = "pandoc" # assume on path
 
@@ -279,7 +279,7 @@ def dump_revision(mw_filename, md_filename, text, title):
             with open(md_filename, "w") as handle:
                 handle.write("---\n")
                 handle.write("title: %s\n" % title.encode("utf-8"))
-                handle.write("permalink: %s\n" % make_url(title).encode("utf-8"))
+                #handle.write("permalink: %s\n" % make_url(title).encode("utf-8"))
                 handle.write("redirect_to: /%s\n" % make_url(redirect).encode("utf-8"))
                 handle.write("---\n\n")
                 handle.write("You should automatically be redirected to [%s](/%s)\n"
@@ -316,7 +316,7 @@ def dump_revision(mw_filename, md_filename, text, title):
     with open(md_filename, "w") as handle:
         handle.write("---\n")
         handle.write("title: %s\n" % title.encode("utf-8"))
-        handle.write("permalink: %s\n" % make_url(title).encode("utf-8"))
+        #handle.write("permalink: %s\n" % make_url(title).encode("utf-8"))
         if title.startswith("Category:"):
             # This assumes have layout template called tagpage
             # which will insert the tag listing automatically
